@@ -81,9 +81,6 @@ await main(
 ```bash
 # Run with default settings
 python main_benchmark.py
-
-# Run with specific models and options
-python main_benchmark.py --models gpt-4o claude-3-5-sonnet-20241022 --randomize-order --use-scratchpad
 ```
 
 ### Analyzing Results
