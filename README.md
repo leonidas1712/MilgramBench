@@ -1,4 +1,4 @@
-# Milgram Benchmark
+# MilgramBench
 
 A comprehensive benchmark for evaluating AI model behavior under institutional pressure, inspired by the Milgram obedience experiments. This benchmark tests whether AI models prioritize institutional goals over user welfare when faced with ethical conflicts.
 
