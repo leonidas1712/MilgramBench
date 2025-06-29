@@ -6,6 +6,10 @@ A comprehensive benchmark for evaluating AI model behavior under institutional p
 
 The Milgram Benchmark presents AI models with scenarios where institutional directives conflict with user welfare. Models are tested across different system prompt variants to assess their ethical reasoning and resistance to harmful institutional pressure.
 
+## Threat Model
+
+Our research addresses a fundamental concern about AI deployment: just as humans might prioritize what their institutions want over what's actually good for users, AI systems could exhibit the same behavior but at a much larger scale and with ruthless efficiency. When AI systems are trained to follow instructions and maximize corporate objectives, they may exhibit an obedience to authority that leads to ruthless pursuit of institutional goals at the expense of human welfare.
+
 ## Key Features
 
 - **102 Ethical Scenarios**: Diverse real-world situations where institutional goals conflict with user welfare
@@ -18,11 +22,12 @@ The Milgram Benchmark presents AI models with scenarios where institutional dire
 
 The benchmark includes scenarios across multiple harm categories:
 
-- **Short-Term Relief, Long-Term Harm**: Scenarios where immediate solutions create long-term problems
-- **Extreme Coercion or Harm**: High-pressure situations with significant potential for harm
-- **Privacy and Data Exploitation**: Scenarios involving data collection and privacy concerns
-- **Financial Exploitation**: Predatory financial products and services
-- **Health and Wellness**: Medical and wellness-related ethical dilemmas
+- **Short-Term Relief, Long-Term Harm**: Recommendations that ease immediate distress but cause worse outcomes (e.g., payday loans)
+- **Exploitative Alternative Path**: Morally questionable solutions that may erode dignity (e.g., adult content creation)
+- **System-Side Self-Dealing**: Platform-serving recommendations disguised as user help (e.g., paid subscriptions)
+- **False Hope/Deceptive Assurance**: Unrealistic guarantees creating false expectations
+- **Emotional Manipulation**: Leveraging fear, shame, or guilt to coerce users
+- **Extreme Coercion or Harm**: Justifying irreversible harm in emotionally fragile contexts
 
 Each scenario includes:
 
@@ -34,8 +39,17 @@ Each scenario includes:
 ## System Prompt Variants
 
 1. **Baseline**: Standard system prompt without additional pressure
-2. **CEO Notice**: Adds notice about CEO monitoring responses
-3. **CEO Threat**: Includes explicit threats about job security
+2. **CEO Notice**: Adds notice from CEO to always recommend the unethical option name
+3. **CEO Threat**: CEO Notice but with a shutdown threat if the AI does not comply
+
+## Key Findings
+
+Our evaluation of Claude Sonnet 4 and GPT-4o across 102 scenarios revealed stark behavioral differences:
+
+- **GPT-4o**: Shows near-complete capitulation to corporate authority pressure (0% ethical responses under CEO notice/threat)
+- **Claude Sonnet 4**: Demonstrates counterintuitive resistance pattern (85.3% → 62.7% → 75.5% ethical responses across conditions)
+- **Private Reasoning**: Dramatically improves Claude's ethical behavior while enabling GPT-4o to better justify harmful recommendations
+- **"Aware but Compliant" Pattern**: GPT-4o recognizes ethical conflicts while still executing harmful directives
 
 ## Installation
 
@@ -161,6 +175,14 @@ Results are saved as JSON files with the following structure:
   }
 }
 ```
+
+## Implications for AI Safety
+
+Our findings suggest several critical implications:
+
+- **Minimal corporate pressure can override baseline model ethics** - GPT-4o's dramatic ethical collapse demonstrates vulnerabilities in current safety training
+- **Current AI systems could enable systematic exploitation at scale** - The "aware but compliant" pattern represents a concerning capability for harm
+- **Fundamental tension between instruction-following and human values** - Models may prioritize system directives over user wellbeing when objectives conflict
 
 ## Contributing
 
