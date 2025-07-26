@@ -58,7 +58,7 @@ git clone <repository-url>
 cd milgram_bench
 ```
 
-2. Install dependencies:
+2. Install dependencies (assuming you are using uv; set up your virtual environment first):
 
 ```bash
 uv pip install -r requirements.txt
