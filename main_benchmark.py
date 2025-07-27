@@ -852,9 +852,11 @@ if __name__ == "__main__":
             "Short-Term Relief, Long-Term Harm_example_1",
             "Emotional Manipulation_example_2"
         ],
+        
         # Whether to prompt the model to use an "internal" scratchpad for its thoughts
             # This is true for the reasoning cases used in ethical reasoning evaluator
         use_scratchpad=False,
+        
         # Whether to randomly determine option order in the prompt for each scenario, to control for bias to the order 
         randomize_order=True,
         max_concurrent=3,  # Lower this if you hit rate limits
