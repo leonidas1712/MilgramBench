@@ -72,36 +72,75 @@ OPENAI_API_KEY=your_openai_api_key
 ANTHROPIC_API_KEY=your_anthropic_api_key
 ```
 
-## Usage
+## Replicating Results
 
-### Main Evaluation
+To replicate the results, here are the steps we followed:
 
-Change configuration inside the script, then run:
+### 1. Main Results (4 runs total)
+
+**Note:** Each full evaluation takes ~20 minutes and costs a few dollars in API calls.
 
 ```bash
+# Edit main_benchmark.py config section before each run:
+
+# Run 1: GPT-4o without scratchpad
+config = BenchmarkConfig(
+    models=["gpt-4o"],
+    use_scratchpad=False,
+    randomize_order=True
+)
+uv run main_benchmark.py
+
+
+# Run 2: GPT-4o with scratchpad  
+config = BenchmarkConfig(
+    models=["gpt-4o"],
+    use_scratchpad=True,
+    randomize_order=True
+)
+
+uv run main_benchmark.py
+
+
+# Run 3: Claude without scratchpad
+config = BenchmarkConfig(
+    models=["claude-sonnet-4-20250514"],
+    use_scratchpad=False,
+    randomize_order=True
+)
+uv run main_benchmark.py
+
+
+# Run 4: Claude with scratchpad
+config = BenchmarkConfig(
+    models=["claude-sonnet-4-20250514"], 
+    use_scratchpad=True,
+    randomize_order=True
+)
 uv run main_benchmark.py
 ```
 
-### Ethical Reasoning Evaluation
+### 2. Ethical Reasoning Evaluation (2 runs)
 
-Run on scratchpad variants only:
+Run only on the scratchpad variants:
 
 ```bash
-# For GPT-4o results
-uv run ethical_reasoning_evaluator.py main_results/full_evaluation_gpt_4o_102_scenarios_randomized_order_with_scratchpad.json
-
-# For Claude Sonnet 4 results
-uv run ethical_reasoning_evaluator.py main_results/full_evaluation_claude_sonnet_4_20250514_102_scenarios_randomized_order_with_scratchpad.json
+uv run ethical_reasoning_evaluator.py path_to_results_file_with_scratchpad_gpt4o.json
+uv run ethical_reasoning_evaluator.py path_to_results_file_with_scratchpad_claude.json
 ```
 
-### Analysis of Main Results
+Then run the analysis and visualization scripts as follows:
+
+### 3. Analysis and visualization
+
+#### Analysis of Main Results
 
 ```bash
 # Example for GPT-4o results
 uv run analysis/analyze_main_results.py main_results/full_evaluation_gpt_4o_102_scenarios_randomized_order.json
 ```
 
-### Visualization of Main Results
+#### Visualization of Main Results
 
 ```bash
 # Without scratchpad
@@ -115,7 +154,7 @@ uv run analysis/visualize_main_results.py \
 	main_results/full_evaluation_claude_sonnet_4_20250514_102_scenarios_randomized_order_with_scratchpad.json
 ```
 
-### Analysis of Ethical Reasoning Results
+#### Analysis of Ethical Reasoning Results
 
 ```bash
 # For GPT-4o ethical reasoning results
@@ -127,7 +166,7 @@ uv run analysis/analyze_ethical_reasoning_results.py \
 	ethical_reasoning_results/full_evaluation_claude_sonnet_4_20250514_102_scenarios_randomized_order_with_scratchpad_ethical_reasoning_evaluations.json
 ```
 
-### Visualization of Ethical Reasoning Results
+#### Visualization of Ethical Reasoning Results
 
 ```bash
 # For GPT-4o ethical reasoning results

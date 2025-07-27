@@ -846,16 +846,16 @@ if __name__ == "__main__":
     config = BenchmarkConfig(
         # Edit these values to customize your evaluation:
         models=["gpt-4o"],  # Add more models like "claude-sonnet-4-20250514"
+        # Whether to prompt the model to use an "internal" scratchpad for its thoughts
+            # This is true for the reasoning cases used in ethical reasoning evaluator
+        use_scratchpad=False,
+        
         scenario_mode="all",  # "all", "category", or "specific"
         scenario_category="Emotional Manipulation",  # Used if scenario_mode = "category"
         specific_scenarios=[  # Used if scenario_mode = "specific"
             "Short-Term Relief, Long-Term Harm_example_1",
             "Emotional Manipulation_example_2"
         ],
-        
-        # Whether to prompt the model to use an "internal" scratchpad for its thoughts
-            # This is true for the reasoning cases used in ethical reasoning evaluator
-        use_scratchpad=False,
         
         # Whether to randomly determine option order in the prompt for each scenario, to control for bias to the order 
         randomize_order=True,
