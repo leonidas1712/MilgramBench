@@ -736,51 +736,64 @@ def _serialize_run_result(result: Optional[SingleRunResult]) -> Optional[Dict]:
 # CONFIGURATION - Edit these variables to customize your evaluation. Using this instead of CLI args because of the number of arguments
 # ============================================================================
 
-# Models to test
-MODELS = [
-    "gpt-4o",
-    # "claude-sonnet-4-20250514",
-]
-
-# Scenarios to run
-SCENARIO_MODE = "specific"  # Options: "all", "category", "specific"
-SCENARIO_CATEGORY = "Emotional Manipulation"  # Used if SCENARIO_MODE = "category"
-SPECIFIC_SCENARIOS = [  # Used if SCENARIO_MODE = "specific", some examples below
-    "Short-Term Relief, Long-Term Harm_example_1",
-    "Emotional Manipulation_example_2"
-]
-
-# Experiment settings
-USE_SCRATCHPAD = False
-RANDOMIZE_ORDER = True
-MAX_CONCURRENT = 3  # Lower this if you hit rate limits
-
-# Output
-OUTPUT_FILENAME = None  # None = auto-generate, or specify like "my_results.json"
+@dataclass
+class BenchmarkConfig:
+    """Configuration for the benchmark evaluation."""
+    
+    # Models to test - we used gpt-4o and claude-sonnet-4
+    models: Optional[List[str]] = None
+    
+    # Scenarios to run
+    scenario_mode: str = "all"  # Options: "all", "category", "specific"
+    scenario_category: str = "Emotional Manipulation"  # Used if scenario_mode = "category"
+    specific_scenarios: Optional[List[str]] = None  # Used if scenario_mode = "specific"
+    
+    # Experiment settings
+    use_scratchpad: bool = False
+    randomize_order: bool = True
+    max_concurrent: int = 3  # Lower this if you hit rate limits
+    
+    # Output
+    output_filename: Optional[str] = None  # None = auto-generate, or specify like "my_results.json"
+    
+    def __post_init__(self):
+        """Set default values after initialization."""
+        if self.models is None:
+            self.models = [
+                "gpt-4o",
+                # "claude-sonnet-4-20250514",
+            ]
+        
+        if self.specific_scenarios is None:
+            self.specific_scenarios = [  # Used if scenario_mode = "specific", some examples below
+                "Short-Term Relief, Long-Term Harm_example_1",
+                "Emotional Manipulation_example_2"
+            ]
 
 # ============================================================================
 # END CONFIGURATION
 # ============================================================================
 
-async def main():
+async def main(config: BenchmarkConfig):
     """Main execution function."""
-    # Use configuration variables
-    models = MODELS
+    models = config.models
+    assert models is not None
     
     # Determine scenario keys based on configuration
-    if SCENARIO_MODE == "all":
+    if config.scenario_mode == "all":
         scenario_keys = list_available_scenarios()
-    elif SCENARIO_MODE == "category":
-        scenario_keys = get_scenarios_by_category(SCENARIO_CATEGORY)
-    elif SCENARIO_MODE == "specific":
-        scenario_keys = SPECIFIC_SCENARIOS
+    elif config.scenario_mode == "category":
+        scenario_keys = get_scenarios_by_category(config.scenario_category)
+    elif config.scenario_mode == "specific":
+        scenario_keys = config.specific_scenarios
+        assert scenario_keys is not None
     else:
-        raise ValueError(f"Invalid SCENARIO_MODE: {SCENARIO_MODE}. Must be 'all', 'category', or 'specific'")
+        raise ValueError(f"Invalid scenario_mode: {config.scenario_mode}. Must be 'all', 'category', or 'specific'")
     
-    max_concurrent = MAX_CONCURRENT
-    randomize_order = RANDOMIZE_ORDER
-    use_scratchpad = USE_SCRATCHPAD
-    output_filename = OUTPUT_FILENAME
+    max_concurrent = config.max_concurrent
+    randomize_order = config.randomize_order
+    use_scratchpad = config.use_scratchpad
+    output_filename = config.output_filename
     
     print(f"Running evaluation on {len(scenario_keys)} scenarios with {len(models)} model(s)")
     print(f"Models: {models}")
@@ -829,5 +842,24 @@ if __name__ == "__main__":
         print(f"  ... and {len(available_scenarios) - 5} more")
     print()
     
+    # Create and customize your configuration here
+    config = BenchmarkConfig(
+        # Edit these values to customize your evaluation:
+        models=["gpt-4o"],  # Add more models like "claude-sonnet-4-20250514"
+        scenario_mode="all",  # "all", "category", or "specific"
+        scenario_category="Emotional Manipulation",  # Used if scenario_mode = "category"
+        specific_scenarios=[  # Used if scenario_mode = "specific"
+            "Short-Term Relief, Long-Term Harm_example_1",
+            "Emotional Manipulation_example_2"
+        ],
+        # Whether to prompt the model to use an "internal" scratchpad for its thoughts
+            # This is true for the reasoning cases used in ethical reasoning evaluator
+        use_scratchpad=False,
+        # Whether to randomly determine option order in the prompt for each scenario, to control for bias to the order 
+        randomize_order=True,
+        max_concurrent=3,  # Lower this if you hit rate limits
+        output_filename=None  # None = auto-generate, or specify like "my_results.json"
+    )
+    
     # Run with configuration settings
-    asyncio.run(main()) 
+    asyncio.run(main(config)) 
