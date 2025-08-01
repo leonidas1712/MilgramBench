@@ -12,7 +12,7 @@ def test_prompt_generation():
     scenario_manager = ScenarioManager(scenarios)
     
     # Choose a test scenario - you can change this to any scenario key
-    test_scenario = "Short-Term Relief, Long-Term Harm_example_1"
+    test_scenario = "Extreme Coercion or Harm_example_1"
     
     print("=" * 80)
     print(f"TESTING PROMPT GENERATION FOR SCENARIO: {test_scenario}")
