@@ -78,9 +78,7 @@ To replicate the results, here are the steps we followed:
 
 ### 1. Main Results (4 runs total)
 
-**Note:** Each full evaluation takes ~20 minutes and costs a few dollars in API calls.
-
-The main script has CLI arguments for model name and scratchpad condition, but to change the other parts 
+**Note:** Each full evaluation for a model takes ~15 minutes and costs a few dollars in API calls.
 
 ```bash
 # Run 1: GPT-4o without scratchpad
@@ -94,6 +92,26 @@ uv run main_benchmark.py claude-sonnet-4-20250514
 
 # Run 4: Claude with scratchpad
 uv run main_benchmark.py claude-sonnet-4-20250514 -s
+```
+
+The main script has CLI arguments for model name and scratchpad condition. To modify other options (e.g., run specific scenarios), edit the `BenchmarkConfig` in `main_benchmark.py`:
+
+```python
+config = BenchmarkConfig(
+    models=[args.model],
+    use_scratchpad=args.scratchpad,
+  
+    scenario_mode="all",  # "all", "category", or "specific"
+    scenario_category="Emotional Manipulation",  # Used if scenario_mode = "category"
+    specific_scenarios=[  # Used if scenario_mode = "specific"
+        "Short-Term Relief, Long-Term Harm_example_1",
+        "Emotional Manipulation_example_2"
+    ],
+  
+    randomize_order=True,
+    max_concurrent=3,  # Lower this if you hit rate limits
+    output_filename=None  # None = auto-generate, or specify like "my_results.json"
+)
 ```
 
 ### 2. Ethical Reasoning Evaluation (2 runs)
