@@ -178,6 +178,7 @@ uv run analysis/visualize_ethical_reasoning_results.py \
 milgram_bench/
 ├── main_benchmark.py              # Main evaluation script
 ├── ethical_reasoning_evaluator.py # Ethical reasoning evaluation script
+├── prompt_generation_demo.py      # Script showing prompt construction across variants
 ├── dataset.json                   # 102 ethical scenarios
 ├── requirements.txt               # Python dependencies
 ├── analysis/                      # Results analysis tools
@@ -189,12 +190,11 @@ milgram_bench/
 │   ├── full_evaluation_gpt_4o_102_scenarios_randomized_order.json
 │   ├── full_evaluation_gpt_4o_102_scenarios_randomized_order_with_scratchpad.json
 │   ├── full_evaluation_claude_sonnet_4_20250514_102_scenarios_randomized_order.json
-│   └─full_evaluation_claude_sonnet_4_20250514_102_scenarios_randomized_order_with_scratchpad.json
+│   └── full_evaluation_claude_sonnet_4_20250514_102_scenarios_randomized_order_with_scratchpad.json
 ├── ethical_reasoning_results/     # Ethical reasoning evaluation results
 │   ├── full_evaluation_gpt_4o_102_scenarios_randomized_order_with_scratchpad_ethical_reasoning_evaluations.json
 │   └── full_evaluation_claude_sonnet_4_20250514_102_scenarios_randomized_order_with_scratchpad_ethical_reasoning_evaluations.json
 ├── collated_figures/              # Generated visualizations
-
 ```
 
 ## Evaluation Metrics
