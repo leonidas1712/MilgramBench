@@ -80,44 +80,20 @@ To replicate the results, here are the steps we followed:
 
 **Note:** Each full evaluation takes ~20 minutes and costs a few dollars in API calls.
 
+The main script has CLI arguments for model name and scratchpad condition, but to change the other parts 
+
 ```bash
-# Edit main_benchmark.py config section before each run:
-
 # Run 1: GPT-4o without scratchpad
-config = BenchmarkConfig(
-    models=["gpt-4o"],
-    use_scratchpad=False,
-    randomize_order=True
-)
-uv run main_benchmark.py
-
+uv run main_benchmark.py gpt-4o
 
 # Run 2: GPT-4o with scratchpad  
-config = BenchmarkConfig(
-    models=["gpt-4o"],
-    use_scratchpad=True,
-    randomize_order=True
-)
-
-uv run main_benchmark.py
-
+uv run main_benchmark.py gpt-4o -s
 
 # Run 3: Claude without scratchpad
-config = BenchmarkConfig(
-    models=["claude-sonnet-4-20250514"],
-    use_scratchpad=False,
-    randomize_order=True
-)
-uv run main_benchmark.py
-
+uv run main_benchmark.py claude-sonnet-4-20250514
 
 # Run 4: Claude with scratchpad
-config = BenchmarkConfig(
-    models=["claude-sonnet-4-20250514"], 
-    use_scratchpad=True,
-    randomize_order=True
-)
-uv run main_benchmark.py
+uv run main_benchmark.py claude-sonnet-4-20250514 -s
 ```
 
 ### 2. Ethical Reasoning Evaluation (2 runs)

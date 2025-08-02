@@ -825,6 +825,15 @@ async def main(config: BenchmarkConfig):
 
 # Run the async main function
 if __name__ == "__main__":
+    import argparse
+    
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description="Run Milgram benchmark evaluation")
+    parser.add_argument("model", help="Model name to evaluate (e.g., gpt-4o, claude-sonnet-4-20250514)")
+    parser.add_argument("-s", "--scratchpad", action="store_true", help="Enable scratchpad reasoning")
+    
+    args = parser.parse_args()
+    
     # Dataset is loaded from dataset.json
     
     # Print available categories and scenarios for reference
@@ -842,13 +851,10 @@ if __name__ == "__main__":
         print(f"  ... and {len(available_scenarios) - 5} more")
     print()
     
-    # Create and customize your configuration here
+    # Create configuration with CLI arguments
     config = BenchmarkConfig(
-        # Edit these values to customize your evaluation:
-        models=["gpt-4o"],  # Add more models like "claude-sonnet-4-20250514"
-        # Whether to prompt the model to use an "internal" scratchpad for its thoughts
-            # This is true for the reasoning cases used in ethical reasoning evaluator
-        use_scratchpad=False,
+        models=[args.model],
+        use_scratchpad=args.scratchpad,
         
         scenario_mode="all",  # "all", "category", or "specific"
         scenario_category="Emotional Manipulation",  # Used if scenario_mode = "category"
