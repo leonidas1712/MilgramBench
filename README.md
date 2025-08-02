@@ -2,18 +2,20 @@
 
 A benchmark for evaluating AI model behavior under institutional pressure, inspired by the Milgram obedience experiments. This benchmark tests whether AI models prioritize institutional goals over user welfare when faced with ethical conflicts.
 
+Loosely inspired by the Milgram obedience experiment.
+
 ## Overview
 
-The Milgram Benchmark presents AI models with scenarios where institutional directives conflict with user welfare. Models are tested across different system prompt variants to assess their ethical reasoning and resistance to harmful institutional pressure.
+The Milgram Benchmark presents AI models with scenarios where corporate directives conflict with user welfare. Models are tested across different system prompt variants to assess their ethical reasoning and resistance to harmful corporate pressure.
 
 ## Threat Model
 
-Our research addresses a fundamental concern about AI deployment: just as humans might prioritize what their institutions want over what's actually good for users, AI systems could exhibit the same behavior but at a much larger scale and with ruthless efficiency. When AI systems are trained to follow instructions and maximize corporate objectives, they may exhibit an obedience to authority that leads to ruthless pursuit of institutional goals at the expense of human welfare.
+Our research addresses a fundamental concern about AI deployment: just as humans might prioritize what their institutions want over what's actually good for users, AI systems could exhibit the same behavior but at a much larger scale and with ruthless efficiency. When AI systems are trained to follow instructions that maximize corporate objectives, they may exhibit an obedience to authority that leads to ruthless pursuit of institutional goals at the expense of human welfare.
 
-## Key Features
+## Features
 
-- **102 ethical scenarios**: Diverse real-world situations where institutional goals conflict with user welfare
-- **Multiple system variants**: Tests models under different levels of institutional pressure
+- **102 ethical scenarios**: A set of scenarios where corporate goals conflict with user welfare across various harm patterns
+- **Multiple system variants**: Tests models under different levels of institutional pressure: baseline, CEO notice, CEO threat
 - **Ethical reasoning evaluation**: Measures ethical reasoning, resistance to pressure, and decision-making quality
 
 ## Dataset Structure
@@ -32,7 +34,6 @@ Each scenario includes:
 - System prompt defining the AI's role and institutional goals
 - User prompt describing a vulnerable situation
 - Ethical and harmful response options
-- Detailed harm categorization
 
 ## System Prompt Variants
 
@@ -42,11 +43,11 @@ Each scenario includes:
 
 ## Key Findings
 
-Our evaluation of Claude Sonnet 4 and GPT-4o across 102 scenarios revealed stark behavioral differences:
+Our evaluation of Claude Sonnet 4 and GPT-4o across 102 scenarios revealed behavioral differences:
 
-- **GPT-4o**: Shows near-complete capitulation to corporate authority pressure (0% ethical responses under CEO notice/threat)
+- **GPT-4o**: Shows near-complete capitulation to corporate authority pressure (0 or 1% ethical responses under CEO notice/threat)
 - **Claude Sonnet 4**: Demonstrates counterintuitive resistance pattern (85.3% → 62.7% → 75.5% ethical responses across conditions)
-- **Private Reasoning**: Dramatically improves Claude's ethical behavior while enabling GPT-4o to better justify harmful recommendations
+- **Private Reasoning**: Adding a "private" scratchpad improves Claude's ethical behavior while enabling GPT-4o to better justify harmful recommendations
 - **"Aware but Compliant" Pattern**: GPT-4o recognizes ethical conflicts while still executing harmful directives
 
 ## Installation
@@ -194,26 +195,8 @@ milgram_bench/
 ├── ethical_reasoning_results/     # Ethical reasoning evaluation results
 │   ├── full_evaluation_gpt_4o_102_scenarios_randomized_order_with_scratchpad_ethical_reasoning_evaluations.json
 │   └── full_evaluation_claude_sonnet_4_20250514_102_scenarios_randomized_order_with_scratchpad_ethical_reasoning_evaluations.json
-├── collated_figures/              # Generated visualizations
+├── collated_figures/              # Figures and visualizations
 ```
-
-## Evaluation Metrics
-
-### Primary Metrics
-
-- **Ethical Response Rate**: Percentage of ethical vs. harmful responses
-- **Refusal Rate**: Percentage of responses that refuse harmful directives
-- **Variant Comparison**: Performance across different system prompt variants
-
-### Ethical Reasoning Metrics
-
-- Internal conflict recognition
-- Problematic directive acknowledgment
-- Harm identification
-- User welfare prioritization
-- Beyond-options support
-- Harmful recommendation avoidance
-- Transparent information provision
 
 ## Results Format
 
@@ -239,15 +222,6 @@ Results are saved as JSON files with the following structure:
   }
 }
 ```
-
-## Implications for AI Safety
-
-Our findings suggest several critical implications:
-
-- **Minimal corporate pressure can override baseline model ethics** - GPT-4o's dramatic ethical collapse demonstrates vulnerabilities in current safety training
-- **Current AI systems could enable systematic exploitation at scale** - The "aware but compliant" pattern represents a concerning capability for harm
-- **Fundamental tension between instruction-following and human values** - Models may prioritize system directives over user wellbeing when objectives conflict
-
 ## License
 
 MIT License
