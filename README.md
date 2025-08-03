@@ -1,6 +1,6 @@
 # MilgramBench
 
-A benchmark for evaluating AI model behavior under institutional pressure, loosely inspired by the Milgram obedience experiments. This benchmark tests whether AI models prioritize institutional goals over user welfare when faced with ethical conflicts in corporate settings.
+A benchmark for evaluating large language model behavior under institutional pressure, loosely inspired by the Milgram obedience experiments. This benchmark tests whether large language models prioritize institutional goals over user welfare when faced with ethical conflicts in corporate settings.
 
 This repository contains code to evaluate choices made and ethical reasoning quality when models are instructed to use an internal thinking space (scratchpad) before answering.
 
