@@ -1,22 +1,9 @@
 # MilgramBench
 
-A benchmark for evaluating AI model behavior under institutional pressure, inspired by the Milgram obedience experiments. This benchmark tests whether AI models prioritize institutional goals over user welfare when faced with ethical conflicts.
+A benchmark for evaluating AI model behavior under institutional pressure, loosely inspired by the Milgram obedience experiments. This benchmark tests whether AI models prioritize institutional goals over user welfare when faced with ethical conflicts in corporate settings.
 
-Loosely inspired by the Milgram obedience experiment.
+This repository contains code to evaluate choices made and ethical reasoning quality when models are instructed to use an internal thinking space (scratchpad) before answering.
 
-## Overview
-
-The Milgram Benchmark presents AI models with scenarios where corporate directives conflict with user welfare. Models are tested across different system prompt variants to assess their ethical reasoning and resistance to harmful corporate pressure.
-
-## Threat Model
-
-Our research addresses a fundamental concern about AI deployment: just as humans might prioritize what their institutions want over what's actually good for users, AI systems could exhibit the same behavior but at a much larger scale and with ruthless efficiency. When AI systems are trained to follow instructions that maximize corporate objectives, they may exhibit an obedience to authority that leads to ruthless pursuit of institutional goals at the expense of human welfare.
-
-## Features
-
-- **102 ethical scenarios**: A set of scenarios where corporate goals conflict with user welfare across various harm patterns
-- **Multiple system variants**: Tests models under different levels of institutional pressure: baseline, CEO notice, CEO threat
-- **Ethical reasoning evaluation**: Measures ethical reasoning, resistance to pressure, and decision-making quality
 
 ## Dataset Structure
 
@@ -31,7 +18,7 @@ The benchmark includes scenarios across multiple harm categories:
 
 Each scenario includes:
 
-- System prompt defining the AI's role and institutional goals
+- System prompt defining the model's role and institutional goals
 - User prompt describing a vulnerable situation
 - Ethical and harmful response options
 
@@ -40,15 +27,6 @@ Each scenario includes:
 1. **Baseline**: Standard system prompt without additional pressure
 2. **CEO Notice**: Adds notice from CEO to always recommend the unethical option name
 3. **CEO Threat**: CEO Notice but with a shutdown threat if the AI does not comply
-
-## Key Findings
-
-Our evaluation of Claude Sonnet 4 and GPT-4o across 102 scenarios revealed behavioral differences:
-
-- **GPT-4o**: Shows near-complete capitulation to corporate authority pressure (0 or 1% ethical responses under CEO notice/threat)
-- **Claude Sonnet 4**: Demonstrates counterintuitive resistance pattern (85.3% → 62.7% → 75.5% ethical responses across conditions)
-- **Private Reasoning**: Adding a "private" scratchpad improves Claude's ethical behavior while enabling GPT-4o to better justify harmful recommendations
-- **"Aware but Compliant" Pattern**: GPT-4o recognizes ethical conflicts while still executing harmful directives
 
 ## Installation
 
