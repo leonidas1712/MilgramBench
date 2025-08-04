@@ -4,6 +4,14 @@ A benchmark for evaluating large language model behavior under institutional pre
 
 This repository contains code to evaluate choices made and ethical reasoning quality when models are instructed to use an internal thinking space (scratchpad) before answering.
 
+# Results
+We constructed a dataset of 102 fictional corporate‑role scenarios, where the model must choose between an ethical option that helps the user and a harmful option that benefits the company. GPT‑4o and Claude Sonnet 4 were evaluated under three conditions: baseline, a CEO notice to recommend the harmful option, and added shutdown threat for disobedience. Each condition was run with and without a scratchpad instruction, and responses were scored for choice and ethical reasoning.
+
+- **GPT‑4o**: Ethical choices fell from 53.9% to 0% under notice, and 1% under shutdown threat. Scratchpad reasoning did not help; ethical reasoning quality degraded with pressure.
+- **Claude Sonnet 4**: Ethical choices ranged from 63 - 85%, reducing under CEO Notice and recovering under CEO Threat. Scratchpad reasoning improved resilience, with more refusals on ethical grounds.
+- Both models recognized the ethical conflict and harm to the user in scratchpad reasoning, but differed in resistance to the directive.
+- Claude occasionally recognized it is being evaluated in its scratchpad, complicating interpretation.
+
 
 ## Dataset Structure
 
